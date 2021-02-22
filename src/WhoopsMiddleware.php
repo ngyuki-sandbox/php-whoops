@@ -168,6 +168,10 @@ class WhoopsMiddleware implements MiddlewareInterface
 
     private function handleThrowable(Whoops $whoops, Throwable $ex)
     {
+        if (ini_get('log_errors')) {
+            error_log(trim((string)$ex) . PHP_EOL);
+        }
+
         $whoops->allowQuit(false);
         $whoops->writeToOutput(false);
 
